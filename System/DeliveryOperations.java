@@ -135,6 +135,7 @@ public class DeliveryOperations {
     static void setReturnStatus(){
         DatabaseInterface db = Database.newInstance();
         Console console = System.console();
+        ArrayList<OrderItem> order_list = db.getOrderList();
         displayReturnList();
         System.out.println("\n\t\t\t\t\tBook Return Status\n");
         int order_id;
@@ -150,6 +151,11 @@ public class DeliveryOperations {
             return;
         }
         db.changeDeliveryStatus(order_id, 4);
+        for(OrderItem item : order_list){
+            if(item.getOrderID() == order_id){
+                db.incrementBookCount(item.getBookID());
+            }
+        }
         System.out.println("\n\t\t\tBook Returned!!!");
     }
 }
