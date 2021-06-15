@@ -99,7 +99,7 @@ public class DeliveryOperations {
         System.out.print("\t\t\t"+"Enter Order ID: ");
         try{
             order_id = Integer.parseInt(console.readLine());
-            if(!checkOrderID(order_id)){
+            if(!Order.checkOrderID(order_id)){
                 Exception exception = new Exception();
                 throw exception;
             }
@@ -120,7 +120,7 @@ public class DeliveryOperations {
         System.out.print("\t\t\t"+"Enter Order ID: ");
         try{
             order_id = Integer.parseInt(console.readLine());
-            if(!checkOrderID(order_id) || !compareOrderUser(order_id, user_id)){
+            if(!Order.checkOrderID(order_id) || !Order.compareOrderUser(order_id, user_id)){
                 Exception exception = new Exception();
                 throw exception;
             }
@@ -141,7 +141,7 @@ public class DeliveryOperations {
         System.out.print("\t\t\t"+"Enter Order ID: ");
         try{
             order_id = Integer.parseInt(console.readLine());
-            if(!checkOrderID(order_id)){
+            if(!Order.checkOrderID(order_id)){
                 Exception exception = new Exception();
                 throw exception;
             }
@@ -151,27 +151,5 @@ public class DeliveryOperations {
         }
         db.changeDeliveryStatus(order_id, 4);
         System.out.println("\n\t\t\tBook Returned!!!");
-    }
-    
-    static boolean checkOrderID(int order_id){
-        DatabaseInterface db = Database.newInstance();
-        ArrayList<OrderItem> order_list = db.getOrderList();
-        for(OrderItem item : order_list){
-            if(order_id == item.getOrderID()){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    static boolean compareOrderUser(int order_id, int user_id){
-        DatabaseInterface db = Database.newInstance();
-        ArrayList<OrderItem> order_list = db.getOrderList();
-        for(OrderItem item : order_list){
-            if(order_id == item.getOrderID() && user_id == item.getUserID()){
-                return true;
-            }
-        }
-        return false;
     }
 }

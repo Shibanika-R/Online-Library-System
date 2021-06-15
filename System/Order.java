@@ -47,4 +47,27 @@ public class Order {
             displayOrderDetails(reader.getID());
         }
     }
+    
+    
+    static boolean checkOrderID(int order_id){
+        DatabaseInterface db = Database.newInstance();
+        ArrayList<OrderItem> order_list = db.getOrderList();
+        for(OrderItem item : order_list){
+            if(order_id == item.getOrderID()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    static boolean compareOrderUser(int order_id, int user_id){
+        DatabaseInterface db = Database.newInstance();
+        ArrayList<OrderItem> order_list = db.getOrderList();
+        for(OrderItem item : order_list){
+            if(order_id == item.getOrderID() && user_id == item.getUserID()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
