@@ -1,0 +1,17 @@
+cd C:\Users\SHIBANIKA\Documents\NetBeansProjects\System\src\main\java
+javac -cp . System/Book.java
+javac -cp . System/BookOperations.java
+javac -cp . System/Cart.java
+javac -cp . System/CartItem.java
+javac -cp . System/Database.java
+javac -cp . System/DatabaseInterface.java
+javac -cp . System/DeliveryMan.java
+javac -cp . System/DeliveryOperations.java
+javac -cp . System/Librarian.java
+javac -cp . System/Login.java
+javac -cp . System/Order.java
+javac -cp . System/OrderItem.java
+javac -cp . System/Reader.java
+javac -cp . System/SignUp.java
+javac -cp . System/Main.java
+java -cp . System/Main
