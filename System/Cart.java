@@ -23,6 +23,7 @@ public class Cart {
         }
         CartItem cart_item = new CartItem(user_id, book_id);
         db.storeCartItem(cart_item);
+        db.decrementBookCount(book_id);
         System.out.println("\n\t\t\tAdded to Cart!!!");
     }
     
@@ -44,6 +45,7 @@ public class Cart {
             return;
         }
         db.removeCartItem(user_id, book_id);
+        db.incrementBookCount(book_id);
         System.out.println("\n\t\t\tRemoved from Cart!!!");
     }
     

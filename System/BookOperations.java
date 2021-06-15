@@ -26,6 +26,7 @@ public class BookOperations {
         }
     }
     
+    
     static void displayBookByID(int book_id){
         DatabaseInterface db = Database.newInstance();
         ArrayList<Book> book_list = db.getBookList();

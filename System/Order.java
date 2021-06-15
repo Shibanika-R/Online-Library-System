@@ -20,7 +20,6 @@ public class Order {
         for(CartItem item : cart){
             if(item.getUserID() == user_id){
                 db.storeOrderItem(new OrderItem(order_id, user_id, item.getBookID(), 1));
-                db.decrementBookCount(item.getBookID());
             }
         }
         Cart.clearCart(user_id);

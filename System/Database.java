@@ -271,6 +271,24 @@ public class Database implements DatabaseInterface{
         }
     }
     
+    public void incrementBookCount(int book_id){
+        ArrayList<Book> book_list = getBookList();
+        Book book = getBookByID(book_id);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("book_count.txt"));
+            for(Book b: book_list){
+                if(b.getID() == book_id)
+                    bw.write(Integer.toString(b.getID())+"\n"+Integer.toString(b.getAvailableCount()+1)+"\n"+Integer.toString(b.getOrderedCount()-1)+"\n");
+                else
+                    bw.write(Integer.toString(b.getID())+"\n"+Integer.toString(b.getAvailableCount())+"\n"+Integer.toString(b.getOrderedCount())+"\n");
+            }
+            bw.close();
+        }
+        catch (IOException e) {
+            System.out.println("exception occoured" + e);
+        }
+    }
+    
     public void updateBook(Book book_new){
         ArrayList<Book> book_list = getBookList();
         Book book_old = getBookByID(book_new.getID());

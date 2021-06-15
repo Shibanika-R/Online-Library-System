@@ -14,6 +14,7 @@ public interface DatabaseInterface {
     void deleteBook(int book_id);
     void updateBook(Book book_new);
     void decrementBookCount(int book_id);
+    void incrementBookCount(int book_id);
     void storeCartItem(CartItem cart_item);
     ArrayList<CartItem> getCartList();
     boolean isCartItemAvailable(int user_id, int book_id);
