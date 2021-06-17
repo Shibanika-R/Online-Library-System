@@ -136,7 +136,7 @@ public class Database implements DatabaseInterface{
     public void decrementBookCount(int book_id) {
         try{
             Statement stmt=con.createStatement();  
-            stmt.executeUpdate("UPDATE book_count SET availcount = availcount-1, ordercount = ordercount-1 WHERE id ="+book_id);
+            stmt.executeUpdate("UPDATE book_count SET availcount = availcount-1, ordercount = ordercount+1 WHERE id ="+book_id);
         }catch(Exception e){ System.out.println(e);}
     }
 
