@@ -36,7 +36,7 @@ public class Cart {
         System.out.print("\t\t\t"+"Enter Book ID: ");
         try{
             book_id = Integer.parseInt(console.readLine());
-            if(!BookOperations.checkBookID(book_id)){
+            if(!db.isCartItemAvailable(user_id, book_id)){
                 Exception exception = new Exception();
                 throw exception;
             }
