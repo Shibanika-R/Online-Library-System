@@ -20,7 +20,7 @@ public class Login {
         
         ArrayList<Reader> reader_list = db.getReaderList();
         for(Reader reader: reader_list){
-            if(reader.getUserName().equals(user_name) && db.getReaderPassword(user_name).equals(password)){
+            if(reader.getUserName().equals(user_name) && db.getUserPassword(user_name).equals(password)){
                 user_ID = reader.getID();
             }
         }
@@ -45,7 +45,7 @@ public class Login {
         
         ArrayList<Librarian> librarian_list = db.getLibrarianList();
         for(Librarian librarian: librarian_list){
-            if(librarian.getUserName().equals(user_name) && db.getLibrarianPassword(user_name).equals(password)){
+            if(librarian.getUserName().equals(user_name) && db.getUserPassword(user_name).equals(password)){
                 user_ID = librarian.getID();
             }
         }
@@ -69,7 +69,7 @@ public class Login {
         
         ArrayList<DeliveryMan> delivery_man_list = db.getDeliveryManList();
         for(DeliveryMan delivery_man: delivery_man_list){
-            if(delivery_man.getUserName().equals(user_name) && db.getDeliveryManPassword(user_name).equals(password)){
+            if(delivery_man.getUserName().equals(user_name) && db.getUserPassword(user_name).equals(password)){
                 user_ID = delivery_man.getID();
             }
         }

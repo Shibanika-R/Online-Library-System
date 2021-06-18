@@ -1,20 +1,19 @@
 package System;
 
-public class Reader{
-    private int reader_id;
-    private String user_name;
-    
-    Reader(int reader_id, String user_name){
-        this.reader_id = reader_id;
-        this.user_name = user_name;
+public class Reader extends User{
+    String address;
+    String phone_number;
+    Reader(int id, String user_name, String address, String phone_number){
+        super(id, user_name);
+        this.address = address;
+        this.phone_number = phone_number;
     }
     
-    int getID(){
-        return this.reader_id;
-    }
-
-    String getUserName(){
-        return this.user_name;
+    String getAddress(){
+        return this.address;
     }
     
+    String getPhoneNumber(){
+        return this.phone_number;
+    }
 }

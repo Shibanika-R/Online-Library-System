@@ -10,13 +10,13 @@ public class SignUp {
 
     void getUserDetails(){
         DatabaseInterface db = Database.newInstance();
-        int reader_id = db.getTotalNumberOfReader()+1;
+        int reader_id = db.getTotalNumberOfUser()+1;
         String user_name = getUsername();
         String password = getPassword();
         String address = getAddress();
         String phone_number = getContactNumber();
         
-        db.storeReader(new Reader(reader_id, user_name), address, phone_number, password);
+        db.storeReader(new Reader(reader_id, user_name, address, phone_number), password);
         
         System.out.println("\t\t\tSuccessfully Account created!!!");
         System.out.println("\t\t\tLogin into your account:)\n\n");

@@ -1,46 +1,39 @@
 package System;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Order {
-    static int getOrderCount(int user_id){
-        DatabaseInterface db = Database.newInstance();
-        ArrayList<OrderItem> order_list = db.getOrderList();
-        int order_id = 0;
-        for(OrderItem item : order_list){
-                order_id = item.getOrderID();
-        }
-        return order_id;
-    }
+    static DatabaseInterface db = Database.newInstance();
     
     static void placeOrder(int user_id){
-        DatabaseInterface db = Database.newInstance();
         ArrayList<CartItem> cart = db.getCartList();
-        int order_id = getOrderCount(user_id)+1;
+        ArrayList<OrderItem> order_list = new ArrayList<OrderItem>();
+        Random random = new Random();
+        int order_id = random.nextInt() & Integer.MAX_VALUE;
         for(CartItem item : cart){
-            if(item.getUserID() == user_id){
-                db.storeOrderItem(new OrderItem(order_id, user_id, item.getBookID(), 1));
+            if(item.getUser().getID() == user_id){
+                order_list.add(new OrderItem(order_id, item.getUser(), item.getBook(), 1));
             }
         }
+        db.storeOrderItem(order_list);
         Cart.clearCart(user_id);
         System.out.println("\t\t\tOrder Placed!!!");
     }
     
     static void displayOrderDetails(int user_id){
-        DatabaseInterface db = Database.newInstance();
         ArrayList<OrderItem> order_list = db.getOrderList();
         System.out.println("\t\t\t\t\t\tOrdered Items\n");
-        System.out.println("\t\t\t"+"Order ID"+"\t"+"Book ID"+"\t\t"+"Status"+"\t\t\t"+"Book Title"+"\n");
+        System.out.println("\t\t\t"+"Order ID"+"\t\t"+"Book ID"+"\t\t"+"Status"+"\t\t\t"+"Book Title"+"\n");
         for(OrderItem item : order_list){
-            if(item.getUserID() == user_id){
-                Book book = BookOperations.getBookByID(item.getBookID());
-                System.out.println("\t\t\t"+item.getOrderID()+"\t\t"+item.getBookID()+"\t\t"+db.getStatusByID(item.getStatusID())+"\t\t"+book.getBookTitle()+"\n");
+            if(item.getUser().getID() == user_id){
+                Book book = item.getBook();
+                System.out.println("\t\t\t"+item.getOrderID()+"\t\t"+item.getBook().getID()+"\t\t"+db.getStatusByID(item.getStatusID())+"\t\t"+book.getBookTitle()+"\n");
             }
         }
     }
     
     static void displayAllUserOrderDetails(){
-        DatabaseInterface db = Database.newInstance();
         ArrayList<Reader> reader_list = db.getReaderList();
         for(Reader reader : reader_list){
             System.out.println("\t\t\tUser ID : "+reader.getID());
@@ -48,9 +41,7 @@ public class Order {
         }
     }
     
-    
     static boolean checkOrderID(int order_id){
-        DatabaseInterface db = Database.newInstance();
         ArrayList<OrderItem> order_list = db.getOrderList();
         for(OrderItem item : order_list){
             if(order_id == item.getOrderID()){
@@ -61,10 +52,10 @@ public class Order {
     }
     
     static boolean compareOrderUser(int order_id, int user_id){
-        DatabaseInterface db = Database.newInstance();
+        
         ArrayList<OrderItem> order_list = db.getOrderList();
         for(OrderItem item : order_list){
-            if(order_id == item.getOrderID() && user_id == item.getUserID()){
+            if(order_id == item.getOrderID() && user_id == item.getUser().getID()){
                 return true;
             }
         }

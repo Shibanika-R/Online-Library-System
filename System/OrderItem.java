@@ -2,14 +2,14 @@ package System;
 
 public class OrderItem {
     private int order_id;
-    private int user_id;
-    private int book_id;
+    private Reader reader;
+    private Book book;
     private int status_id;
     
-    OrderItem(int order_id, int user_id, int book_id, int status_id){
+    OrderItem(int order_id, Reader reader, Book book, int status_id){
         this.order_id = order_id;
-        this.user_id = user_id;
-        this.book_id = book_id;
+        this.reader = reader;
+        this.book = book;
         this.status_id = status_id;
     }
     
@@ -17,12 +17,12 @@ public class OrderItem {
         return this.order_id;
     }
     
-    int getUserID(){
-        return this.user_id;
+    Reader getUser(){
+        return this.reader;
     }
     
-    int getBookID(){
-        return this.book_id;
+    Book getBook(){
+        return this.book;
     }
     
     int getStatusID(){

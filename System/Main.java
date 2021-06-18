@@ -2,6 +2,23 @@ package System;
 
 import java.io.Console;
 
+enum MainMenu{
+    CREATE_ACCOUNT, LOGIN_AS_READER, LOGIN_AS_LIBRARIAN, LOGIN_AS_DELIVERYMAN, EXIT_SYSTEM
+}
+
+enum ReaderUser{
+    DISPLAY_BOOK, VIEW_CART, ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER, DISPLAY_ORDER, RETURN_REQUEST, LOGOUT
+}
+
+enum LibrarianUser{
+    DISPLAY_BOOK, ADD_BOOK, REMOVE_BOOK, MODIFY_BOOK, DISPLAY_USER_ORDER, LOGOUT
+}
+
+enum DeliveryManUser{
+    DELIVER_BOOK_DETAILS, RETURN_BOOK_DETAILS, DELIVER_DETAILS_UPDATE, RETURN_DETAILS_UPDATE, LOGOUT
+}
+
+
 public class Main {
     
     static Console console=System.console();
@@ -12,7 +29,7 @@ public class Main {
         
         System.out.println("\t\t\t\t\tWelcome To Online Library System\n");
         
-        while(choice != 5){
+        while(true){
             
             System.out.println("\n\t\t\tCreate Account      - Enter 1");
             System.out.println("\t\t\tLogin Reader        - Enter 2");
@@ -33,44 +50,48 @@ public class Main {
                 continue;
             }
             
-            
-            switch(choice){
+            MainMenu main_menu = MainMenu.values()[choice-1];
+            switch(main_menu){
                 
-                case 1:
+                case CREATE_ACCOUNT:
                     SignUp signup = new SignUp();
                     signup.getUserDetails();
                     break;
                 
-                case 2:
+                case LOGIN_AS_READER:
                     Login login = new Login();
                     if(login.authenticateReader()){
                         readerFunctionality(login);
                     }
                     break;
                 
-                case 3:
+                case LOGIN_AS_LIBRARIAN:
                     login = new Login();
                     if(login.authenticateLibrarian()){
                         librarianFunctionality(login);
                     }
                     break;
                 
-                case 4:
+                case LOGIN_AS_DELIVERYMAN:
                     login = new Login();
                     if(login.authenticateDeliveryMan()){
                         deliveryManFunctionality(login);
                     }
                     break;
                     
-                case 5:
+                case EXIT_SYSTEM:
                     System.out.println("\n\t\t\t\tThank You for using Online Library System");
                     break;
+            }
+            
+            if(main_menu == MainMenu.EXIT_SYSTEM){
+                break;
             }
         }
     }
     
     static void readerFunctionality(Login login){
-        int choice = -1;
+        int choice;
         
         System.out.println("\n\t\t\t\t\tWelcome To Reader Portal\n");
         
@@ -94,44 +115,46 @@ public class Main {
                 }
             }catch(Exception e){
                 System.out.println("\t\t\tPlease enter valid choice value in numbers:(\n");
+                continue;
             }
             
-            switch(choice){
+            ReaderUser reader_choice = ReaderUser.values()[choice-1];
+            switch(reader_choice){
                 
-                case 1:
+                case DISPLAY_BOOK:
                     BookOperations.displayAvailableBook(login.user_ID);
                     break;
                 
-                case 2:
+                case VIEW_CART:
                     Cart.displayCart(login.user_ID);
                     break;
                     
-                case 3:
+                case ADD_TO_CART:
                     Cart.addToCart(login.user_ID);
                     break;
                 
-                case 4:
+                case REMOVE_FROM_CART:
                     Cart.removeFromCart(login.user_ID);
                     break;
                 
-                case 5:
+                case PLACE_ORDER:
                     Order.placeOrder(login.user_ID);
                     break;
                 
-                case 6:
+                case DISPLAY_ORDER:
                     Order.displayOrderDetails(login.user_ID);
                     break;
                 
-                case 7:
+                case RETURN_REQUEST:
                     DeliveryOperations.requestReturn(login.user_ID);
                     break;
-                case 8:
+                case LOGOUT:
                     login.user_name = null;
                     login.password = null;
                     break;
             }
             
-            if(choice == 8){
+            if(reader_choice == ReaderUser.LOGOUT){
                 break;
             }
         }
@@ -160,37 +183,39 @@ public class Main {
                 }
             }catch(Exception e){
                 System.out.println("\t\t\tPlease enter valid choice value in numbers:(\n");
+                continue;
             }
             
-            switch(choice){
+            LibrarianUser librarian_choice = LibrarianUser.values()[choice-1];
+            switch(librarian_choice){
                 
-                case 1:
+                case DISPLAY_BOOK:
                     BookOperations.displayBookDetails();
                     break;
                     
-                case 2:
+                case ADD_BOOK:
                     BookOperations.addBookDetails();
                     break;
                     
-                case 3:
+                case REMOVE_BOOK:
                     BookOperations.removeBookDetails();
                     break;
                 
-                case 4:
+                case MODIFY_BOOK:
                     BookOperations.modifyBookDetails();
                     break;
                 
-                case 5:
+                case DISPLAY_USER_ORDER:
                     Order.displayAllUserOrderDetails();
                     break;
                     
-                case 6:
+                case LOGOUT:
                     login.user_name = null;
                     login.password = null;
                     break;
             }
             
-            if(choice == 6){
+            if(librarian_choice == LibrarianUser.LOGOUT){
                 break;
             }
         }
@@ -218,33 +243,35 @@ public class Main {
                 }
             }catch(Exception e){
                 System.out.println("\t\t\tPlease enter valid choice value in numbers:(\n");
+                continue;
             }
             
-            switch(choice){
+            DeliveryManUser delivery_man_choice = DeliveryManUser.values()[choice-1];
+            switch(delivery_man_choice){
                 
-                case 1:
+                case DELIVER_BOOK_DETAILS:
                     DeliveryOperations.displayDeliverList();
                     break;
                     
-                case 2:
+                case RETURN_BOOK_DETAILS:
                     DeliveryOperations.displayReturnList();
                     break;
                 
-                case 3:
+                case DELIVER_DETAILS_UPDATE:
                     DeliveryOperations.setDeliverStatus();
                     break;
                 
-                case 4:
+                case RETURN_DETAILS_UPDATE:
                     DeliveryOperations.setReturnStatus();
                     break;
                     
-                case 5:
+                case LOGOUT:
                     login.user_name = null;
                     login.password = null;
                     break;
             }
             
-            if(choice == 5){
+            if(delivery_man_choice == DeliveryManUser.LOGOUT){
                 break;
             }
         }

@@ -1,19 +1,19 @@
 package System;
 
 public class CartItem {
-    private int user_id;
-    private int book_id;
+    private Reader user;
+    private Book book;
     
-    CartItem(int user_id, int book_id){
-        this.user_id = user_id;
-        this.book_id = book_id;
+    CartItem(Reader user, Book book){
+        this.user = user;
+        this.book = book;
     }
     
-    int getUserID(){
-        return this.user_id;
+    Reader getUser(){
+        return this.user;
     }
     
-    int getBookID(){
-        return this.book_id;
+    Book getBook(){
+        return this.book;
     }
 }

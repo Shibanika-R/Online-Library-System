@@ -14,4 +14,5 @@ javac -cp . System/OrderItem.java
 javac -cp . System/Reader.java
 javac -cp . System/SignUp.java
 javac -cp . System/Main.java
+java -cp mysql-connector-java-8.0.25.jar; System/Main
 java -cp . System/Main
