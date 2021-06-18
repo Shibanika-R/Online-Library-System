@@ -9,7 +9,6 @@ public interface DatabaseInterface {
     ArrayList<Book> getBookList();
     void storeBook(Book book);
     String getUserPassword(String user_name);
-    
     Reader getReaderByID(int user_id);
     int getTotalNumberOfUser();
     void deleteBook(int book);
@@ -23,10 +22,7 @@ public interface DatabaseInterface {
     ArrayList<OrderItem> getOrderList();
     void storeOrderItem(ArrayList<OrderItem> order_list);
     ArrayList<DeliveryMan> getDeliveryManList();
-    
     void changeDeliveryStatus(int order_id, int status_id);
     String getStatusByID(int status_id);
-    
-    
     Book getBookByID(int book_id);
 }
