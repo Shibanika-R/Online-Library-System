@@ -13,7 +13,10 @@ public class Order {
         int order_id = random.nextInt() & Integer.MAX_VALUE;
         for(CartItem item : cart){
             if(item.getUser().getID() == user_id){
+                if(BookOperations.getCount(item.getBook().getID()) <= 0)
                 order_list.add(new OrderItem(order_id, item.getUser(), item.getBook(), 1));
+                else
+                System.out.println(item.getBook().getID()+" - Unavailable");
             }
         }
         db.storeOrderItem(order_list);
