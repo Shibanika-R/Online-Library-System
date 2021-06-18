@@ -37,9 +37,9 @@ public class Database implements DatabaseInterface{
         ArrayList<Reader> reader_list = new ArrayList<Reader>();
         try{
             Statement stmt=con.createStatement();  
-            ResultSet rs=stmt.executeQuery("select user.id, user.name, reader_details.address, reader_details.phoneno from user inner join reader_details on user.id = reader_details.id where role = 'reader'");  
+            ResultSet rs=stmt.executeQuery("select user.name, reader_details.id, reader_details.address, reader_details.phoneno from user inner join reader_details on user.id = reader_details.id");  
             while(rs.next())  
-                reader_list.add(new Reader(rs.getInt("user.id"), rs.getString("user.name"), rs.getString("reader_Details.address"), rs.getString("reader_Details.phoneno")));
+                reader_list.add(new Reader(rs.getInt("reader_details.id"), rs.getString("user.name"), rs.getString("reader_Details.address"), rs.getString("reader_Details.phoneno")));
         }catch(Exception e){ System.out.println(e);}
         return reader_list;
     }
@@ -190,7 +190,7 @@ public class Database implements DatabaseInterface{
     public Reader getReaderByID(int user_id){
         try{
             Statement stmt=con.createStatement();  
-            ResultSet rs=stmt.executeQuery("select * from user inner join reader_details on user.id = reader_details.id");  
+            ResultSet rs=stmt.executeQuery("select * from user inner join reader_details on user.id = reader_details.id where user.id = "+user_id);  
             if(rs.next())
                 return new Reader(user_id, rs.getString("user.name"), rs.getString("reader_details.address"), rs.getString("reader_details.phoneno"));
         }catch(Exception e){ System.out.println(e);}

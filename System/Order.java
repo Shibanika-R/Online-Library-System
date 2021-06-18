@@ -13,12 +13,17 @@ public class Order {
         int order_id = random.nextInt() & Integer.MAX_VALUE;
         for(CartItem item : cart){
             if(item.getUser().getID() == user_id){
-                order_list.add(new OrderItem(order_id, item.getUser(), item.getBook(), 1));
+                if(BookOperations.getCount(item.getBook().getID()) > 0){
+                    order_list.add(new OrderItem(order_id, item.getUser(), item.getBook(), 1));
+                    System.out.println("\t\t\t"+item.getBook().getID()+" - Book Order Placed");
+                }
+                else
+                System.out.println("\t\t\t"+item.getBook().getID()+" - Book Unavailable");
             }
         }
         db.storeOrderItem(order_list);
         Cart.clearCart(user_id);
-        System.out.println("\t\t\tOrder Placed!!!");
+        
     }
     
     static void displayOrderDetails(int user_id){
