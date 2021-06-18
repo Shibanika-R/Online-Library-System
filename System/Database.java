@@ -128,7 +128,11 @@ public class Database implements DatabaseInterface{
     public void decrementBookCount(int book_id) {
         try{
             Statement stmt=con.createStatement();  
+<<<<<<< HEAD
             stmt.executeUpdate("UPDATE book SET available_count = available_count-1, ordered_count = ordered_count+1 WHERE id ="+book_id);
+=======
+            stmt.executeUpdate("UPDATE book_count SET availcount = availcount-1, ordercount = ordercount+1 WHERE id ="+book_id);
+>>>>>>> 266b108fc40c33b8949e5fdc58665012526d989f
         }catch(Exception e){ System.out.println(e);}
     }
 
