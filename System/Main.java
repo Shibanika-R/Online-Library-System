@@ -7,11 +7,11 @@ enum MainMenu{
 }
 
 enum ReaderUser{
-    DISPLAY_BOOK, VIEW_CART, ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER, DISPLAY_ORDER, RETURN_REQUEST, LOGOUT
+    DISPLAY_BOOK, SEARCH_BOOK_BY_TITLE, SEARCH_BOOK_BY_AUTHOR, VIEW_CART, ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER, DISPLAY_ORDER, RETURN_REQUEST, RETURN_BOOK_DETAILS, LOGOUT
 }
 
 enum LibrarianUser{
-    DISPLAY_BOOK, ADD_BOOK, REMOVE_BOOK, MODIFY_BOOK, DISPLAY_USER_ORDER, LOGOUT
+    DISPLAY_BOOK, SEARCH_BOOK_BY_TITLE, SEARCH_BOOK_BY_AUTHOR, ADD_BOOK, MODIFY_BOOK, DISPLAY_USER_ORDER, LOGOUT
 }
 
 enum DeliveryManUser{
@@ -25,7 +25,7 @@ public class Main {
 
     public static void main(String[] args){
         
-        int choice = -1;
+        int choice;
         
         System.out.println("\t\t\t\t\tWelcome To Online Library System\n");
         
@@ -98,18 +98,21 @@ public class Main {
         while(true){
             
             System.out.println("\n\t\t\tDisplay Book Details            - Enter 1");
-            System.out.println("\t\t\tView Cart                       - Enter 2");
-            System.out.println("\t\t\tAdd Book to Cart                - Enter 3");
-            System.out.println("\t\t\tRemove Book from Cart           - Enter 4");
-            System.out.println("\t\t\tPlace Order                     - Enter 5");
-            System.out.println("\t\t\tDisplay Order Details           - Enter 6");
-            System.out.println("\t\t\tBook Return Request             - Enter 7");
-            System.out.println("\t\t\tLogout                          - Enter 8");
+            System.out.println("\t\t\tSearch Book by title            - Enter 2");
+            System.out.println("\t\t\tSearch Book by author           - Enter 3");
+            System.out.println("\t\t\tView Cart                       - Enter 4");
+            System.out.println("\t\t\tAdd Book to Cart                - Enter 5");
+            System.out.println("\t\t\tRemove Book from Cart           - Enter 6");
+            System.out.println("\t\t\tPlace Order                     - Enter 7");
+            System.out.println("\t\t\tDisplay Order Details           - Enter 8");
+            System.out.println("\t\t\tBook Return Request             - Enter 9");
+            System.out.println("\t\t\tBook Return Raised List         - Enter 10");
+            System.out.println("\t\t\tLogout                          - Enter 11");
             System.out.print("\t\t\tEnter your choice: ");
             
             try{
                 choice = Integer.parseInt(console.readLine());
-                if(choice <= 0 || choice >= 9){
+                if(choice <= 0 || choice >= 12){
                     Exception exception = new Exception();
                     throw exception;
                 }
@@ -123,6 +126,14 @@ public class Main {
                 
                 case DISPLAY_BOOK:
                     BookOperations.displayAvailableBook(login.user_ID);
+                    break;
+                
+                case SEARCH_BOOK_BY_TITLE:
+                    BookOperations.searchBookByTitle();
+                    break;
+                    
+                case SEARCH_BOOK_BY_AUTHOR:
+                    BookOperations.searchBookByAuthor();
                     break;
                 
                 case VIEW_CART:
@@ -148,6 +159,11 @@ public class Main {
                 case RETURN_REQUEST:
                     DeliveryOperations.requestReturn(login.user_ID);
                     break;
+                
+                case RETURN_BOOK_DETAILS:
+                    DeliveryOperations.displayReturnList(login.user_ID);
+                    break;
+                    
                 case LOGOUT:
                     login.user_name = null;
                     login.password = null;
@@ -161,23 +177,24 @@ public class Main {
     }
 
     static void librarianFunctionality(Login login){
-        int choice = -1;
+        int choice;
         
         System.out.println("\n\t\t\t\t\tWelcome To Librarian Portal\n");
         
         while(true){
             
             System.out.println("\n\t\t\tDisplay Book Details            - Enter 1");
-            System.out.println("\t\t\tAdd Book                        - Enter 2");
-            System.out.println("\t\t\tRemove Book                     - Enter 3");
-            System.out.println("\t\t\tModify Book Details             - Enter 4");
-            System.out.println("\t\t\tUsers Order Details             - Enter 5");
-            System.out.println("\t\t\tLogout                          - Enter 6");
+            System.out.println("\t\t\tSearch Book by title            - Enter 2");
+            System.out.println("\t\t\tSearch Book by author           - Enter 3");
+            System.out.println("\t\t\tAdd Book                        - Enter 4");
+            System.out.println("\t\t\tModify Book Details             - Enter 5");
+            System.out.println("\t\t\tUsers Order Details             - Enter 6");
+            System.out.println("\t\t\tLogout                          - Enter 7");
             System.out.print("\t\t\tEnter your choice: ");
             
             try{
                 choice = Integer.parseInt(console.readLine());
-                if(choice <= 0 || choice >= 7){
+                if(choice <= 0 || choice >= 8){
                     Exception exception = new Exception();
                     throw exception;
                 }
@@ -192,13 +209,17 @@ public class Main {
                 case DISPLAY_BOOK:
                     BookOperations.displayBookDetails();
                     break;
-                    
-                case ADD_BOOK:
-                    BookOperations.addBookDetails();
+                
+                case SEARCH_BOOK_BY_TITLE:
+                    BookOperations.searchBookByTitle();
                     break;
                     
-                case REMOVE_BOOK:
-                    BookOperations.removeBookDetails();
+                case SEARCH_BOOK_BY_AUTHOR:
+                    BookOperations.searchBookByAuthor();
+                    break;
+                   
+                case ADD_BOOK:
+                    BookOperations.addBookDetails();
                     break;
                 
                 case MODIFY_BOOK:
@@ -222,7 +243,7 @@ public class Main {
     }
 
     static void deliveryManFunctionality(Login login){
-        int choice = -1;
+        int choice;
         
         System.out.println("\n\t\t\t\t\tWelcome To Delivery Man Portal\n");
         

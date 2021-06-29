@@ -16,13 +16,24 @@ public class DeliveryOperations {
         }
     }
     
+    static void displayReturnList(int user_id){
+        ArrayList<OrderItem> order_list = db.getOrderList();
+        System.out.println("\n\t\t\t\t\t"+"Return Book Details"+"\n");
+        System.out.println("\t\t\t"+"Order ID"+"\t"+"Fine"+"\t"+"Due Date"+"\t\t"+"Book Title"+"\n");
+        for(OrderItem order : order_list){
+            if(order.getStatusID() == 3 && order.getUser().getID() == user_id){
+               System.out.println("\t\t\t"+order.getOrderID()+"\t"+order.getFine()+"\t"+order.getDueDate()+"\t\t"+order.getBook().getBookTitle()+"\n");
+            }
+        }
+    }
+    
     static void displayReturnList(){
         ArrayList<OrderItem> order_list = db.getOrderList();
         System.out.println("\n\t\t\t\t\t"+"Return Book Details"+"\n");
-        System.out.println("\t\t\t"+"Order ID"+"\t"+"Cust Name"+"\t"+"Phone No."+"\t"+"Address"+"\t\t\t"+"Book Title"+"\n");
+        System.out.println("\t\t\t"+"Order ID"+"\t"+"Cust Name"+"\t"+"Phone No."+"\t"+"Address"+"\t"+"Fine"+"\t"+"Due Date"+"\t\t\t"+"Book Title"+"\n");
         for(OrderItem order : order_list){
             if(order.getStatusID() == 3){
-               System.out.println("\t\t\t"+order.getOrderID()+"\t"+order.getUser().getUserName()+"\t\t"+order.getUser().getPhoneNumber()+"\t"+order.getUser().getAddress()+"\t\t"+order.getBook().getBookTitle()+"\n");
+               System.out.println("\t\t\t"+order.getOrderID()+"\t"+order.getUser().getUserName()+"\t\t"+order.getUser().getPhoneNumber()+"\t"+order.getUser().getAddress()+"\t"+order.getFine()+"\t"+order.getDueDate()+"\t\t"+order.getBook().getBookTitle()+"\n");
             }
         }
     }
@@ -30,10 +41,10 @@ public class DeliveryOperations {
     static void displayDeliveredList(int user_id){
         ArrayList<OrderItem> order_list = db.getOrderList();
         System.out.println("\n\t\t\t\t\t"+"Delivered Details"+"\n");
-        System.out.println("\t\t\t"+"Order ID"+"\t\t"+"Book Title"+"\n");
+        System.out.println("\t\t\t"+"Order ID"+"\t"+"Fine"+"\t"+"Due Date"+"\t\t"+"Book Title"+"\n");
         for(OrderItem order : order_list){
             if(order.getStatusID() == 2 && order.getUser().getID() == user_id){
-               System.out.println("\t\t\t"+order.getOrderID()+"\t\t"+order.getBook().getBookTitle()+"\n");
+               System.out.println("\t\t\t"+order.getOrderID()+"\t"+order.getFine()+"\t"+order.getDueDate()+"\t\t"+order.getBook().getBookTitle()+"\n");
             }
         }
     }
@@ -55,6 +66,7 @@ public class DeliveryOperations {
             return;
         }
         db.changeDeliveryStatus(order_id, 2);
+        db.updateOrderDate(order_id);
         System.out.println("\n\t\t\tBook Delivered!!!");
     }
     
@@ -75,12 +87,12 @@ public class DeliveryOperations {
             return;
         }
         db.changeDeliveryStatus(order_id, 3);
+        db.updateReturnDate(order_id);
         System.out.println("\n\t\t\tReturn Book Request Raised!!!");
     }
     
     static void setReturnStatus(){
         Console console = System.console();
-        ArrayList<OrderItem> order_list = db.getOrderList();
         displayReturnList();
         System.out.println("\n\t\t\t\t\tBook Return Status\n");
         int order_id;
@@ -96,11 +108,7 @@ public class DeliveryOperations {
             return;
         }
         db.changeDeliveryStatus(order_id, 4);
-        for(OrderItem item : order_list){
-            if(item.getOrderID() == order_id){
-                db.incrementBookCount(item.getBook().getID());
-            }
-        }
+        db.returnBookUpdate(order_id);
         System.out.println("\n\t\t\tBook Returned!!!");
     }
 }

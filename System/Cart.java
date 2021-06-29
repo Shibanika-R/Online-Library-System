@@ -56,7 +56,11 @@ public class Cart {
     }
     
     static void displayCart(int user_id){
-        ArrayList<CartItem> cart = db.getCartList();
+        ArrayList<CartItem> cart = db.getCartList(user_id);
+        if(cart.isEmpty()){
+            System.out.println("\t\t\t\t\t\tCart is Empty\n");
+            return;
+        }
         System.out.println("\t\t\t\t\t\tCart Items\n");
         System.out.println("\t\t\t"+"ID"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
         for(CartItem item : cart){
@@ -67,11 +71,9 @@ public class Cart {
     }
     
     static void clearCart(int user_id){
-        ArrayList<CartItem> cart = db.getCartList();
+        ArrayList<CartItem> cart = db.getCartList(user_id);
         for(CartItem item : cart){
-            if(item.getUser().getID() == user_id){
-                db.removeCartItem(item);
-            }
+            db.removeCartItem(item);
         }
     }
 }

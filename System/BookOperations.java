@@ -10,18 +10,22 @@ public class BookOperations {
     
     static void displayAvailableBook(int user_id){
         System.out.println("\t\t\t\t\t\tBook Details\n");
-        System.out.println("\t\t\t"+"ID"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
+        System.out.println("\t\t\t"+"ID"+"\t\t"+"Book Author"+"\t"+"Status"+"\t\t"+"Book Title"+"\n");
         for(Book book : book_list){
-            if(book.getAvailableCount() > 0 && !db.isCartItemAvailable(user_id, book.getID()))
-                System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
+            if(!db.isCartItemAvailable(user_id, book.getID())){
+                if(book.getAvailableCount() > 0)
+                    System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\tAvailable    "+"\t\t"+book.getBookTitle()+"\n");
+                else
+                    System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\tNot Available"+"\t\t"+book.getBookTitle()+"\n");
+            }
         }
     }
     
     static void displayBookDetails(){
         System.out.println("\t\t\t\t\t\tBook Details\n");
-        System.out.println("\t\t\t"+"ID"+"\t"+"Count"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
+        System.out.println("\t\t\t"+"ID"+"\t"+"Available Count"+"\t"+"Ordered Count"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
         for(Book book : book_list){
-            System.out.println("\t\t\t"+book.getID()+"\t"+book.getAvailableCount()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
+            System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getAvailableCount()+"\t"+book.getOrderedCount()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
         }
     }
     
@@ -61,27 +65,6 @@ public class BookOperations {
         db.storeBook(book);
         book_list.add(book);
         System.out.println("\n\t\t\tBook Added Successfully!!!");
-    }
-    
-    static void removeBookDetails(){
-        displayBookDetails();
-        Console console = System.console();
-        System.out.println("\t\t\tRemove Book\n");
-        int book_id;
-        System.out.print("\t\t\t"+"Enter Book ID: ");
-        try{
-            book_id = Integer.parseInt(console.readLine());
-            if(!checkBookID(book_id)){
-                Exception exception = new Exception();
-                throw exception;
-            }
-        }catch(Exception e){
-            System.out.println("\n\t\t\tInvalid Book ID");
-            return;
-        }
-        db.deleteBook(book_id);
-        book_list = db.getBookList();
-        System.out.println("\n\t\t\tBook Removed Successfully!!!");
     }
     
     static void modifyBookDetails(){
@@ -130,5 +113,31 @@ public class BookOperations {
                 return book.getAvailableCount();
         }
         return -1;
+    }
+    
+    static void searchBookByTitle(){
+        Console console = System.console();
+        String book_title;
+        System.out.print("\t\t\t"+"Enter Book Title: ");
+        book_title = console.readLine();
+        ArrayList<Book> book_list = db.getBooksByTitle(book_title);
+        System.out.println("\t\t\t\t\t\tSearch Results\n");
+        System.out.println("\t\t\t"+"ID"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
+        for(Book book : book_list){
+                System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
+        }
+    }
+    
+    static void searchBookByAuthor(){
+        Console console = System.console();
+        String book_author;
+        System.out.print("\t\t\t"+"Enter Book Author: ");
+        book_author = console.readLine();
+        ArrayList<Book> book_list = db.getBooksByTitle(book_author);
+        System.out.println("\t\t\t\t\t\tSearch Results\n");
+        System.out.println("\t\t\t"+"ID"+"\t\t"+"Book Author"+"\t\t"+"Book Title"+"\n");
+        for(Book book : book_list){
+                System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
+        }
     }
 }
