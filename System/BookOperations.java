@@ -31,8 +31,15 @@ public class BookOperations {
     
     
     static void displayBookByID(int book_id){
-        Book book = db.getBookByID(book_id);
+        Book book = getBookByID(book_id);
         System.out.println("\t\t\t"+book.getID()+"\t\t"+book.getBookAuthor()+"\t\t"+book.getBookTitle()+"\n");
+    }
+    
+    static Book getBookByID(int book_id){
+        for(Book book : book_list){
+            if(book.getID() == book_id){return book;}
+        }
+        return new Book(-1, null, null, -1, -1);
     }
     
     static void addBookDetails(){
@@ -65,6 +72,28 @@ public class BookOperations {
         db.storeBook(book);
         book_list.add(book);
         System.out.println("\n\t\t\tBook Added Successfully!!!");
+    }
+    
+    static void removeBookDetails(){
+        displayBookDetails();
+        Console console = System.console();
+        System.out.println("\t\t\tRemove Book\n");
+        int book_id;
+        System.out.print("\t\t\tEnter Book ID: ");
+        try{
+            book_id = Integer.parseInt(console.readLine());
+            Book book = getBookByID(book_id);
+            if(book.getID() == -1 || book.getOrderedCount() > 0){
+                Exception exception = new Exception();
+                throw exception;
+            }
+        }catch(Exception e){
+            System.out.println("\n\t\t\tInvalid Book ID or Book cannot be removed!!!");
+            return;
+        }
+        db.deleteBook(book_id);
+        book_list = db.getBookList();
+        System.out.println("\n\t\t\tBook Removed Successfully!!!");
     }
     
     static void modifyBookDetails(){

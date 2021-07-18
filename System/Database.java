@@ -123,8 +123,8 @@ public class Database implements DatabaseInterface{
     
     public void deleteBook(int book_id) {
         try{
-            Statement stmt=con.createStatement(); 
-            stmt.executeUpdate("delete from book where id = "+book_id);
+            Statement stmt=con.createStatement();
+            stmt.executeUpdate("update book set status = \"Inactive\", available_count = 0 where id = "+book_id+" and ordered_count = 0");
             stmt.executeUpdate("delete from book_copies where book_id = "+book_id);
         }catch(Exception e){ System.out.println(e);}
     }
@@ -342,7 +342,7 @@ public class Database implements DatabaseInterface{
             Statement stmt=con.createStatement();
             for(OrderItem order : order_list){
                 double fine = 0.0;
-                ResultSet rs=stmt.executeQuery("select (CASE WHEN return_date is not NULL and due_date <= return_date THEN (return_date-due_date)*10.0 WHEN return_date is NULL and due_date <= (select current_date) THEN ((select current_date)-due_date)*10.0 ELSE 0.0 END)as fine from orders where id ="+ order.getOrderID());
+                ResultSet rs=stmt.executeQuery("select (CASE WHEN return_date is not NULL and due_date <= return_date THEN datediff(return_date,due_date)*10.0 WHEN return_date is NULL and due_date <= (select current_date) THEN datediff(current_date, due_date)*10.0 ELSE 0.0 END)as fine from orders where id ="+ order.getOrderID());
                 if(rs.next())
                 fine = rs.getDouble("fine");
                 order.setFine(fine);

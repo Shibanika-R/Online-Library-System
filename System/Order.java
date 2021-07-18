@@ -35,7 +35,6 @@ public class Order {
             System.out.println("\n\t\t\t\t\t\tNo Order Placed\n");
             return;
         }
-        System.out.println("\t\t\t\t\t\tOrdered Items\n");
         System.out.println("\t\t\t"+"Order ID"+"\t\t"+"Book ID"+"\t\t"+"Status"+"\t\t"+"Fine"+"\t"+"Due Date"+"\t\t"+"Book Title"+"\n");
         for(OrderItem item : order_list){
             if(item.getUser().getID() == user_id){
@@ -48,7 +47,7 @@ public class Order {
     static void displayAllUserOrderDetails(){
         ArrayList<Reader> reader_list = db.getReaderList();
         for(Reader reader : reader_list){
-            System.out.println("\t\t\t\t\t\tUser ID : "+reader.getID());
+            System.out.println("\t\t\tUser ID :- "+reader.getID());
             displayOrderDetails(reader.getID());
         }
     }

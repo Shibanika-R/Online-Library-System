@@ -11,7 +11,7 @@ enum ReaderUser{
 }
 
 enum LibrarianUser{
-    DISPLAY_BOOK, SEARCH_BOOK_BY_TITLE, SEARCH_BOOK_BY_AUTHOR, ADD_BOOK, MODIFY_BOOK, DISPLAY_USER_ORDER, LOGOUT
+    DISPLAY_BOOK, SEARCH_BOOK_BY_TITLE, SEARCH_BOOK_BY_AUTHOR, ADD_BOOK, REMOVE_BOOK, MODIFY_BOOK, DISPLAY_USER_ORDER, LOGOUT
 }
 
 enum DeliveryManUser{
@@ -187,14 +187,15 @@ public class Main {
             System.out.println("\t\t\tSearch Book by title            - Enter 2");
             System.out.println("\t\t\tSearch Book by author           - Enter 3");
             System.out.println("\t\t\tAdd Book                        - Enter 4");
-            System.out.println("\t\t\tModify Book Details             - Enter 5");
-            System.out.println("\t\t\tUsers Order Details             - Enter 6");
-            System.out.println("\t\t\tLogout                          - Enter 7");
+            System.out.println("\t\t\tRemove Book                     - Enter 5");
+            System.out.println("\t\t\tModify Book Details             - Enter 6");
+            System.out.println("\t\t\tUsers Order Details             - Enter 7");
+            System.out.println("\t\t\tLogout                          - Enter 8");
             System.out.print("\t\t\tEnter your choice: ");
             
             try{
                 choice = Integer.parseInt(console.readLine());
-                if(choice <= 0 || choice >= 8){
+                if(choice <= 0 || choice >= 9){
                     Exception exception = new Exception();
                     throw exception;
                 }
@@ -221,7 +222,9 @@ public class Main {
                 case ADD_BOOK:
                     BookOperations.addBookDetails();
                     break;
-                
+                case REMOVE_BOOK:
+                    BookOperations.removeBookDetails();
+                    break;
                 case MODIFY_BOOK:
                     BookOperations.modifyBookDetails();
                     break;
